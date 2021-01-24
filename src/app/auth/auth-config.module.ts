@@ -7,12 +7,15 @@ export function configureAuth(oidcConfigService: OidcConfigService): () => Promi
       stsServer: 'https://devkit-sts.azurewebsites.net',
       redirectUrl: window.location.origin,
       postLogoutRedirectUri: window.location.origin,
-      clientId: 'please-enter-clientId',
-      scope: 'please-enter-scopes', // 'openid profile offline_access ' + your scopes
+      clientId: 'devkit-clients-spa.pkce',
+      scope: 'openid profile email roles app.api.employeeprofile.read', // 'openid profile offline_access ' + your scopes
       responseType: 'code',
       silentRenew: true,
-      useRefreshToken: true,
-      renewTimeBeforeTokenExpiresInSeconds: 30,
+      silentRenewUrl: '${window.location.origin}/silent-renew.html',
+      useRefreshToken: false,
+      postLoginRoute: window.location.origin,
+      //renewTimeBeforeTokenExpiresInSeconds: 30,
+      logLevel: 3,
     });
 }
 
