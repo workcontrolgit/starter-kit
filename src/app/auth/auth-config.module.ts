@@ -14,7 +14,7 @@ export function configureAuth(oidcConfigService: OidcConfigService): () => Promi
       silentRenewUrl: '${window.location.origin}/silent-renew.html',
       useRefreshToken: false,
       postLoginRoute: window.location.origin,
-      //renewTimeBeforeTokenExpiresInSeconds: 30,
+      renewTimeBeforeTokenExpiresInSeconds: 30,
       logLevel: 3,
     });
 }
