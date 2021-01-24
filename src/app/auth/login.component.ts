@@ -7,6 +7,9 @@ import { environment } from '@env/environment';
 import { Logger, UntilDestroy, untilDestroyed } from '@core';
 import { AuthenticationService } from './authentication.service';
 
+import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
+
 const log = new Logger('Login');
 
 @UntilDestroy()
@@ -20,46 +23,28 @@ export class LoginComponent implements OnInit {
   error: string | undefined;
   loginForm!: FormGroup;
   isLoading = false;
+  userData$: Observable<any>;
+  isAuthenticated$: Observable<boolean>;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private authenticationService: AuthenticationService
-  ) {
-    this.createForm();
-  }
+    private authenticationService: AuthenticationService,
+    private authService: AuthService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userData$ = this.authService.userData;
+    this.isAuthenticated$ = this.authService.isLoggedIn;
+  }
 
   login() {
-    this.isLoading = true;
-    const login$ = this.authenticationService.login(this.loginForm.value);
-    login$
-      .pipe(
-        finalize(() => {
-          this.loginForm.markAsPristine();
-          this.isLoading = false;
-        }),
-        untilDestroyed(this)
-      )
-      .subscribe(
-        (credentials) => {
-          log.debug(`${credentials.username} successfully logged in`);
-          this.router.navigate([this.route.snapshot.queryParams.redirect || '/'], { replaceUrl: true });
-        },
-        (error) => {
-          log.debug(`Login error: ${error}`);
-          this.error = error;
-        }
-      );
+    log.debug('doLogin');
+    this.authService.doLogin();
   }
 
-  private createForm() {
-    this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      remember: true,
-    });
+  logout() {
+    this.authService.signOut();
   }
 }
