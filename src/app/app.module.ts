@@ -16,6 +16,7 @@ import { AboutModule } from './about/about.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthConfigModule } from './auth/auth-config.module';
+import { NbThemeModule } from '@nebular/theme';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { AuthConfigModule } from './auth/auth-config.module';
     FormsModule,
     HttpClientModule,
     TranslateModule.forRoot(),
+    NbThemeModule.forRoot(),
     NgbModule,
     CoreModule,
     SharedModule,
