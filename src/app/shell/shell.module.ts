@@ -8,9 +8,36 @@ import { I18nModule } from '@app/i18n';
 import { AuthModule } from '@app/auth';
 import { ShellComponent } from './shell.component';
 import { HeaderComponent } from './header/header.component';
+import {
+  NbIconModule,
+  NbLayoutModule,
+  NbMenuModule,
+  NbSidebarModule,
+  NbThemeModule,
+  NbActionsModule,
+  NbUserModule,
+  NbContextMenuModule,
+} from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 @NgModule({
-  imports: [CommonModule, TranslateModule, NgbModule, AuthModule, I18nModule, RouterModule],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    NgbModule,
+    NbIconModule,
+    NbSidebarModule.forRoot(),
+    NbMenuModule.forRoot(),
+    NbThemeModule.forRoot({ name: 'default' }),
+    NbLayoutModule,
+    NbEvaIconsModule,
+    NbActionsModule,
+    NbUserModule,
+    NbContextMenuModule,
+    AuthModule,
+    I18nModule,
+    RouterModule,
+  ],
   declarations: [HeaderComponent, ShellComponent],
 })
 export class ShellModule {}

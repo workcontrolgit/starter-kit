@@ -8,9 +8,15 @@ import { RouteReusableStrategy } from './route-reusable-strategy';
 import { ApiPrefixInterceptor } from './http/api-prefix.interceptor';
 import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
 
+import { UserData } from './data/users';
+import { UserService } from './mock/users.service';
+
+const DATA_SERVICES = [{ provide: UserData, useClass: UserService }];
+
 @NgModule({
   imports: [CommonModule, HttpClientModule, TranslateModule, RouterModule],
   providers: [
+    DATA_SERVICES,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiPrefixInterceptor,
